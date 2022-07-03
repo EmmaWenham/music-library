@@ -5,41 +5,41 @@ const app = require('../src/app');
 
 describe('create album', () => {
   let db;
-  let artist;
+  let artistId;
 
   beforeEach(async () => {
-      db = await getDb();
+    db = await getDb();
 
-    [artist] = await db.query('SELECT * from Artist');
+    const result = await db.query('INSERT INTO Artist (name, genre) VALUES (?, ?)', [
+      'Spice Girls',
+      'pop',
+    ]);
 
-});
+    artistId = result[0].insertId;
+  });
+  
 
   afterEach(async () => {
-    await db.query('DELETE FROM Albums');
+    await db.query('DELETE FROM Album');
     await db.close();
   });
 
-  describe('/album', () => {
+  describe('/artist/:artistId/album', () => {
     describe('POST', () => {
       it('creates a new album in a database', async () => {
-        
-        if(artist[0]) {
-        const res = await request(app).post('/artist/:artistId/album').send({
-          name: 'Spice Girls',
-          genre: 'pop',
-          year: '1997',
+        const res = await request(app).post(`/artist/${artistId}/album`).send({
+          name: 'Spice World',
+          year: 1997,
         });
 
         expect(res.status).to.equal(201);
 
         const [[albumEntries]] = await db.query(
-          `SELECT * FROM Albums WHERE name = 'Spice Girls'`
+          `SELECT * FROM Album WHERE name = 'Spice World'`
         );
 
         expect(albumEntries.name).to.equal('Spice World');
-        expect(albumEntries.genre).to.equal('pop');
-        expect(albumEntries.year).to.equal('1997');
-        }
+        expect(albumEntries.year).to.equal(1997);
       });
     });
   });
