@@ -26,4 +26,5 @@ Create a .env file and add local variables:
 If you want to run the test create a new .env.test file with same environmental variables as above and only changing the DB_NAME variable. 
 
 To run the project - npm start
+
 To run the tests - npm test
