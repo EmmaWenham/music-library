@@ -1,4 +1,4 @@
-# About
+## About
 
 The music library API project as part of the Manchester Codes curriculum of the backend module. 
 
@@ -9,7 +9,7 @@ The project was built with Node and Express and uses SQL to interact with the da
 
 Test Driven Development was used throughout the project with Mocha, Chai and Supertest used for integration testing.
 
-# Installation
+## Installation
 
 Pull a MYSQL image and run the container
 Clone this repo
